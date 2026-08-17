@@ -4,6 +4,9 @@
 
 DSH Web 插件：在 agent 回合**完成**或**失败**时、后台（子代理）会话结束时、以及 agent 请求输入或权限时播放音效。音效库使用 opencode 内置的完整音效包 —— **45 个音效**，分为五组（`alert-*`、`bip-bop-*`、`nope-*`、`staplebops-*`、`yup-*`；MIT 协议，来自 [anomalyco/opencode](https://github.com/anomalyco/opencode) `packages/ui/src/assets/audio`）—— 嵌入客户端 bundle 中。
 
+<img width="1000" height="1000" alt="image" src="https://github.com/user-attachments/assets/34f9af71-41f1-4187-b03f-afb8954403d5" />
+
+
 **DSH 设置面板中的"声音"区域**允许你为每个事件选择音效（分组菜单 + 逐行预览）、开关功能、调节音量，以及恢复 opencode 默认设置。
 
 ## 事件 → 音效映射（opencode 默认值）
