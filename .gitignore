@@ -1,0 +1,9 @@
+node_modules/
+.opencode/
+apktool_mcp_server_workspace/
+*.tgz
+scripts/_s.tmp
+scripts/_session-dump*.jsonl
+scripts/web-server.log*
+scripts/web-restart.log
+scripts/web-verify-result.json
