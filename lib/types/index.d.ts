@@ -1,7 +1,6 @@
-/** dsh-sounds host plugin: settings namespace + fenced /sounds/api routes. */
+/** dsh-sounds host plugin: JSON-backed preferences + fenced /sounds/api routes. */
 import type { Context } from '@deepseek-ai/cordis';
-import type { Schema } from 'schemastery';
-/** User-facing preferences (validated by the settings service). */
+/** User-facing preferences (persisted in <DSH_HOME>/storages/plugin-data/dsh-sounds.json). */
 export interface SoundsPrefs {
     enabled: boolean;
     volume: number;
@@ -13,6 +12,4 @@ export interface SoundsPrefs {
 }
 export declare const name = "dsh-sounds";
 export declare const inject: string[];
-export declare const Config: Schema;
-export declare const PrefsSchema: Schema<SoundsPrefs>;
-export declare function apply(ctx: Context, config: unknown): void;
+export declare function apply(ctx: Context): void;
