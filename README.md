@@ -25,7 +25,7 @@ DSH Web 插件：在 agent 回合**完成**或**失败**时、后台（子代理
 - **系统通知**（Windows 通知中心）：同一事件管道也会触发浏览器 `Notification`，镜像 opencode 的注意力语义 —— 仅在页面**未聚焦**时显示 toast。设置面板有"通知"组：主开关、权限行（含"请求通知权限"按钮，浏览器要求用户手势触发），以及逐事件开关。点击 toast 会聚焦 DSH 页面。
 - **逐事件开关**（音效和通知）持久化在 `localStorage`（`dsh-sounds.events`、`dsh-sounds.notifications`）中，而非宿主设置命名空间，因此开关变更仅需刷新页面即可生效 —— 无需重启宿主。
 - **自动播放策略**：浏览器在首次用户手势前会阻止音频播放。插件会排队最新的音效，并在首次点击/按键时回放。
-- **偏好设置**存储在 `dsh-sounds` 设置命名空间（宿主端），通过插件自身的 fenced `/sounds` API 路由提供给浏览器（loopback-trust fence，与核心 `/api` 传输相同）。默认值：
+- **偏好设置**存储在宿主端 JSON 文件 `<DSH_HOME>/storages/plugin-data/dsh-sounds.json`（DSH 0.2 不再支持插件动态注册设置命名空间），通过插件自身的 fenced `/sounds/api` 路由提供给浏览器（connection 信任围栏，与核心 `/api` 传输相同）。默认值：
 
   ```yaml
   dsh-sounds:
@@ -41,8 +41,8 @@ DSH Web 插件：在 agent 回合**完成**或**失败**时、后台（子代理
 ## 安装
 
 ```sh
-# 在包含此 checkout 的目录中执行：
-dsh plugin --profile web add ../path/to/dsh-sounds-<version>.tgz
+# 在包含此 checkout 的目录中执行（profile 名以本机为准，如 0.2.2-alpha.2）：
+dsh plugin --profile 0.2.2-alpha.2 add ../path/to/dsh-sounds-<version>.tgz
 ```
 
 然后重启 Web 应用（`dsh web`）以使 profile 加载新的 bundle。请从打包的 tarball 安装（而非 `link:` 路径），以确保包作为真实目录存在于 profile 的 `node_modules` 中，使其自身的 imports 能正确解析。
@@ -111,7 +111,7 @@ Silent by design: `aborted` (user pressed stop), `blocked` (input rejected), `in
 - **System notifications** (Windows notification center): the same event pipeline also fires browser `Notification`s, mirroring opencode's attention semantics — toasts appear only while the page is **not focused**. The Settings panel has a "通知" group: a master switch, a permission row with a "请求通知权限" button (browsers require a user gesture), and one on/off switch per event. Clicking a toast focuses the DSH page.
 - **Per-event switches** (sounds and notifications) are persisted in `localStorage` (`dsh-sounds.events`, `dsh-sounds.notifications`), not the host settings namespace, so switch changes take effect on a page refresh alone — no host restart required.
 - **Autoplay policy**: browsers gate audio until the first user gesture. The plugin queues the newest sound and replays it on the first click/keypress.
-- **Preferences** live in the `dsh-sounds` settings namespace (host half), served to the browser through the plugin's own fenced `/sounds/api` routes (loopback-trust fence, same as the core `/api` transport). Defaults:
+- **Preferences** live in the host-side JSON document `<DSH_HOME>/storages/plugin-data/dsh-sounds.json` (DSH 0.2 no longer lets a plugin register a settings namespace), served to the browser through the plugin's own fenced `/sounds/api` routes (Connection trust fence, same as the core `/api` transport). Defaults:
 
   ```yaml
   dsh-sounds:
@@ -127,8 +127,8 @@ Silent by design: `aborted` (user pressed stop), `blocked` (input rejected), `in
 ### Install
 
 ```sh
-# from the directory containing this checkout:
-dsh plugin --profile web add ../path/to/dsh-sounds-<version>.tgz
+# from the directory containing this checkout (use your profile name, e.g. 0.2.2-alpha.2):
+dsh plugin --profile 0.2.2-alpha.2 add ../path/to/dsh-sounds-<version>.tgz
 ```
 
 Then restart the web app (`dsh web`) so the profile boots the new bundle. Install from the packed tarball (not a `link:` path) so the package lives as a real directory in the profile's `node_modules` and its own imports resolve.
