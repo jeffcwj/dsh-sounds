@@ -76,10 +76,11 @@ node scripts/test-client.mjs    # 检测引擎的 stub-loader 模拟
 设置面板的导航图标在 DSH shell 中硬编码（`@deepseek-ai/dsh-client-ui-settings-general`：models/agent-presets/plugins 有特殊图标，其他 section id 回退到齿轮图标）。目前没有注册 section 图标的通道，因此通过一个小型本地补丁为"声音"区域添加扬声器图标：
 
 ```sh
-node scripts/patch-nav-icon.mjs   # 幂等操作；dsh 升级后重新运行
+node scripts/patch-nav-icon.mjs           # 幂等；自动定位 %USERPROFILE%\.dsh-win\versions\*\node_modules 下的 bundle
+node scripts/patch-nav-icon.mjs --check   # 只检查是否已打补丁
 ```
 
-补丁在已安装的客户端 bundle 中添加了一个 `if (id === "dsh-sounds")` 分支。dsh 升级重装包后会还原此补丁 —— 重新运行脚本即可（标记注释使其在已应用时为空操作）。
+补丁在已安装的客户端 bundle 中添加了一个 `if (id === "dsh-sounds")` 分支。dsh 升级重装包后会还原此补丁 —— 重新运行脚本即可（标记注释使其在已应用时为空操作）。多版本安装时可用 `DSH_VERSION_DIR=C:\...\versions\0.2.2-alpha.2` 指定目标目录。打完需要重启宿主并硬刷新页面。
 
 ## 许可证
 
@@ -162,10 +163,11 @@ The client bundle is hand-written in the shell's module-loader format (`window._
 The Settings panel nav glyphs are hardcoded in the DSH shell (`@deepseek-ai/dsh-client-ui-settings-general`: models/agent-presets/plugins get special icons, every other section id falls back to the gear). There is no registration channel for a section icon, so a tiny local patch adds a speaker glyph for the "声音" section:
 
 ```sh
-node scripts/patch-nav-icon.mjs   # idempotent; re-run after a dsh upgrade
+node scripts/patch-nav-icon.mjs           # idempotent; finds the bundle under %USERPROFILE%\.dsh-win\versions\*\node_modules
+node scripts/patch-nav-icon.mjs --check   # report status only
 ```
 
-The patch is a single `if (id === "dsh-sounds")` branch in the installed client bundle. A dsh upgrade that reinstalls the package reverts it — re-run the script (the marker comment makes it a no-op when already applied).
+The patch is a single `if (id === "dsh-sounds")` branch in the installed client bundle. A dsh upgrade that reinstalls the package reverts it — re-run the script (the marker comment makes it a no-op when already applied). Pass `DSH_VERSION_DIR=C:\...\versions\0.2.2-alpha.2` to target a specific install; restart the host and hard-refresh the page afterwards.
 
 ### License
 
